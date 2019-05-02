@@ -1,0 +1,3 @@
+1. its depends on the code that is being executed prior to them. forexample, if there is no code, then setTimeout will be executed first. If there is an I/O task executed before them, then setImmidiate will be executed first as it is in a check phase.
+2.process.nextTick is not part of the event loop but adds callbackk to the nextTick queue. where as setImmidiate will schedule a callback to run at check phase after I/O events'callback.process.nextTick will always be executed first. but it is recommended to use setImmidiate at all times.
+3.   http, fs, stream, util, events, dns, buffer, zlib, utl and path
