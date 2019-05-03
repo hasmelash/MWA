@@ -1,0 +1,2 @@
+When i use a stream , the memory management is efficient than the others since the data is chunked into pieces and its easier to read when the http request initiated.
+the readFile method and the read sync method have more of similar behavior since they both deal with the whole complete data to read and write.
