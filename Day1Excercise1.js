@@ -21,7 +21,7 @@
 //     let char='*';
 //     let original =this;
 //     let splited = this.split(" ");
-//     return new Promise (function(resolve){
+//     return new Promise (function(resolve, reject){
 //         if(original!==null || original!==""){
 //             splited.map(word=>{
 //                 if(banned.includes(word)){
@@ -40,26 +40,27 @@
 //     .catch(e=>console.error(e));
 
 //------------------------ASYNC/AWAIT--------------------------------------
-
+//
 // String.prototype.filterWords=async function(banned){
 //     let char='*';
 //     let original =this;
 //     let splited = this.split(" ");
 //     try{
 //             var result = await function(){
-//                 return new Promise (function(resolve, reject){
-//                     if(original!==null || original!==""){
+//                 // return new Promise (function(resolve, reject){
+//                 //     if(original!==null || original!==""){
 //                         splited.map(word=>{
 //                             if(banned.includes(word)){
 //                                 original = original.replace(word, char.repeat(word.length));
 //                             }
-//                         })
-//                         resolve(original);
-//                     }else {
-//                         reject(new Error());
-//                     }
-//                 });
-//             }
+//                         });
+//                         //resolve(original);
+//                     // }else {
+//                     //     reject(new Error());
+//                     // }
+//             return original;
+//             };
+//
 //
 //            console.log(result());
 //         }catch (e) {
@@ -76,50 +77,56 @@ String.prototype.filterWords=function(banned){
     let char='*';
     let original =this;
     let splited = this.split(" ");
-
-    const{from}=rxjs;
-    const {map}=observable.operator;
+   // let x;
+    const{from}=require('rxjs');
+    const {map}=require('rxjs/operators');
+    const {filter} =require('rxjs/operators');
 
     from(splited)
         .pipe(
+            filter(x =>banned.includes(x)),
             map(word=>{
-                if(banned.includes(word)){
-                    original = original.replace(word, char.repeat(word.length));
-                }
+
+                   // console.log(word);
+                    original = original.replace(word, "***");
+
+                    //console.log(original);
+
             })
         )
         .subscribe(
-            original=>console.log(original)
+        (word)=>console.log(word)
         )
 }
 "This house is nice house !".filterWords(["house","nice"]);
 
 //method 2 -----from promise to observable----
 
-String.prototype.filterWords=function(banned){
-    let char='*';
-    let original =this;
-    let splited = this.split(" ");
+// String.prototype.filterWords=function(banned){
+//     let char='*';
+//     let original =this;
+//     let splited = this.split(" ");
+//
+//     const{from}=require('rxjs');
+//     const {map}=require('rxjs/operators');
+//
+//     let promise = new Promise (function(resolve, reject){
+//                     if(original!==null || original!==""){
+//                         splited.map(word=>{
+//                             if(banned.includes(word)){
+//                                 original = original.replace(word, char.repeat(word.length));
+//                             }
+//                         })
+//                         resolve(original);
+//                     }else {
+//                         reject(new Error());
+//                     }
+//                 });
+//
+//     from(promise)
+//         .subscribe(
+//             original=>console.log(original)
+//         )
+// }
+// "This house is nice house !".filterWords(["house","nice"]);
 
-    const{from}=rxjs;
-    const {map}=observable.operator;
-
-    let promise = return new Promise (function(resolve, reject){
-                    if(original!==null || original!==""){
-                        splited.map(word=>{
-                            if(banned.includes(word)){
-                                original = original.replace(word, char.repeat(word.length));
-                            }
-                        })
-                        resolve(original);
-                    }else {
-                        reject(new Error());
-                    }
-                });
-
-    from(promise)
-        .subscribe(
-            original=>console.log(original)
-        )
-}
-"This house is nice house !".filterWords(["house","nice"]);

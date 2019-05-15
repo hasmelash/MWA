@@ -15,12 +15,13 @@ app.use(morgan('combined', {stream:x}));
 app.listen(port, ()=>console.log("server is listening on port" + port));
 
 const grades = [{id:1,name:"Henock Asmelash", course:"CS572", grade:100}];
-
+const contentType;
 const validator = function(req,res, next){
-    if(check(req.body).isJSON()){
-        return next();
+    if(!req.is('application/json')){
+        console.log("what the hell");
+        res.send(400);
     }else{
-        console.log("huh???");
+        return next();
     }
 };
 

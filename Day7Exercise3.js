@@ -1,5 +1,5 @@
 const express=require('express');
-const con = require('./app');
+const con = require('./typescript/app');
 const bodyParser = require('body-parser');
 const app=express();
 port=4000;
